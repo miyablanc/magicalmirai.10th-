@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>TextAlive App API | lyric sheet example</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Noto+Sans+JP&family=Noto+Serif+JP&family=Shippori+Mincho+B1:wght@500&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/regular.min.css"
+        />
+        <link rel="stylesheet" href="./style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <!-- オーバーレイ / Overlay -->
+        <div id="overlay">
+            <p><span class="far">&#xf254;</span>now loading...</p>
+        </div>
+
+        <!-- ヘッダ / Header -->
+        <div id="header">
+            <!-- 再生コントロール / Playback control -->
+            <div id="control" class="far">
+                <a href="#" id="play" class="disabled">&#xf144;</a>
+                <a href="#" id="stop" class="disabled">&#xf28d;</a>
+            </div>
+            <!-- アーティストと楽曲の情報 / Artist and song info -->
+            <div id="meta">
+                <div id="artist">artist: <span>-</span></div>
+                <div id="song">song: <span>-</span></div>
+            </div>
+        </div>
+
+        <!-- 音源 / Audio souce -->
+        <div id="media"></div>
+
+        <!-- 歌詞 / Lyrics text -->
+        <div id="lyrics">
+            <!-- 文字 / Text -->
+            <div id="text"></div>
+            <!-- ビートバー / Beat bar -->
+            <div id="bar"></div>
+        </div>
+
+        <!-- シークバー -->
+        <div id="seekbar">
+            <div></div>
+        </div>
+
+        <div class="actionContainer">
+            <button id="fontBtn">font変更</button>
+
+            <select id="menu">
+                <option value="0">Loading Memories</option>
+                <option value="1">青に溶けた風船</option>
+                <option value="2">歌の欠片と</option>
+                <option value="3">未完のストーリー</option>
+                <option value="4">みはるかす</option>
+                <option value="5">fear</option>
+            </select>
+
+            <div class="searchContainer">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="seachIcon"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                </svg>
+                <input type="search" name="" id="search" />
+                <ul id="suggest"></ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <img src="image/chara.png" alt="">
+        </div>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/textalive-app-api/dist/index.js"></script>
+        <script src="./script.js"></script>
+    </body>
+</html>

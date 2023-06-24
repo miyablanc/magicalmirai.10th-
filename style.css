@@ -1,0 +1,410 @@
+/* 背景 / Background */
+body {
+  /* background: #ff9438; */
+  
+  background-attachment: fixed;
+  background-size: 100vw 100vh; 
+}
+
+/* オーバーレイ / Overlay */
+#overlay {
+    user-select: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    background: #0006;
+    color: #fffc;
+    z-index: 5;
+}
+#overlay.disabled {
+    display: none;
+}
+#overlay > p {
+    width: 100vw;
+    font-size: 40px;
+    text-align: center;
+}
+#overlay > p > span {
+    display: inline-block;
+    padding-right: 20px;
+    margin-right: 20px;
+    border-right: 1px solid #fff6;
+}
+
+/* フッターと音源 / Header and audio source */
+#header,
+#media {
+    /* ページ左に固定 / Stick to the page left */
+    position: fixed;
+    left: 0;
+
+    /* 背景色と文字色 / Background and text color */
+    background: #000c;
+    color: #fff;
+
+    z-index: 1;
+}
+
+/* フッター / Footer */
+#header {
+    /* 上寄せ / Top-aligned */
+    top: 20px;
+
+    /* 少し余裕を持たせる / Box with a small padding */
+    padding: 10px 16px;
+
+    /* フォントサイズ小さめ、太め / Small but bold typography */
+    font-size: 10.5px;
+    font-weight: bold;
+
+    /* 子要素を横に並べて配置 / Align child content to the right */
+    display: flex;
+
+    /* 子要素は縦に中央揃え / Vertically middle-aligned */
+    align-items: center;
+}
+
+/* 再生ボタン / Play button */
+#control {
+    font-size: 21px;
+    padding-right: 10px;
+    border-right: 1px solid #fff9;
+}
+#control.disabled {
+    display: none;
+}
+#control a {
+    color: rgb(99 208 226);
+    text-decoration: none;
+}
+#control a.disabled {
+    opacity: 0.3;
+}
+#control a:hover {
+    color: rgb(255 148 56);
+}
+
+/* アーティストと楽曲の情報 / Artist and song info */
+#meta {
+    padding-left: 10px;
+}
+#meta span {
+    font-weight: normal;
+}
+
+/* 音源 / Audio source */
+#media {
+    /* 下寄せ / Bottom-aligned */
+    bottom: 10px;
+}
+#media.disabled > .textalive-media-wrapper {
+    width: 0;
+    height: 0;
+}
+
+/**
+ * ビート情報が取れるようになったらビートバーを表示
+ * Show beat bar when beat information becomes available
+ */
+@keyframes activateBeatBar {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+/**
+ * ビート毎に右に広げてフェードアウト
+ * Make beat bar span to the right and then fade out
+ */
+@keyframes showBeatBar {
+    0% {
+        width: 0;
+        opacity: 1;
+    }
+    50% {
+        width: 100%;
+        opacity: 1;
+    }
+    100% {
+        width: 100%;
+        opacity: 0;
+    }
+}
+
+/**
+ * 歌詞が下からせり出してくる
+ * Make lyrics text appear from the bottom
+ */
+ @keyframes showLyrics {
+    0% {
+        transform: translate3d(0, -100%, 0) scale(0.6) rotate(90deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate3d(0, -50%, 0) scale(1.2);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes hideLyrics {
+    0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate3d(0, -100%, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes purupuru {
+    0% {
+        color: yellow;
+    }
+    50% {
+        color: skyblue;
+    }
+    100% {
+        color: yellow;
+    }
+}
+
+/* ビートバー / Beat bar */
+#bar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 10px;
+    background: #606060;
+    z-index: -1;
+}
+
+/* 歌詞 / Lyrics */
+#lyrics {
+    z-index: 0;
+    padding: 3em 0.5em 5em 0.5em;
+    line-height: 2em;
+    font-size: 36px;
+    font-family: "Shippori Mincho B1", serif;
+    color: #252525;
+    user-select: none;
+    cursor: pointer;
+    position: fixed;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    /* 歌詞をちょっと回転させる / Rotate text */
+    /* transform: rotateX(10deg) rotateY(-10deg); */
+}
+
+#text {
+    padding: 0 1rem;
+}
+
+#text > div {
+    /* 文字ごとに改行しない / No line-break per char */
+    display: inline-block;
+}
+#text > div > div {
+    animation: showLyrics 0.5s;
+}
+
+/**
+ * 名詞などを強調表示する
+ * Emphasize nouns
+ */
+#text .noun {
+    color: #252525;
+    /* color: rgb(242 251 253); */
+    font-size: 40px;
+}
+
+/**
+ * フレーズ終わりで右にマージンを空けて読みやすくする
+ * Add right margin to the last char in phrases
+ */
+#text .lastChar {
+    margin-right: 30px;
+}
+
+#text .firstCharInEnglishWord {
+    margin-left: 20px;
+}
+
+#text .lastCharInEnglishWord {
+    margin-right: 20px;
+}
+
+#text .lastCharInEnglishWord + .firstCharInEnglishWord {
+    margin-left: 0;
+}
+
+#seekbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: rgba(130 130 255 / 40%);
+}
+
+#seekbar > div {
+    width: 0;
+    height: 100%;
+    background: rgba(130 130 255 / 80%);
+}
+
+@keyframes pikapika {
+    0% {
+        background: #808fcd;
+    }
+
+    25% {
+        background: #d08fd8;
+    }
+
+    50% {
+        background: #ff4c88;
+    }
+
+    75% {
+        background: #d08fd8;
+    }
+
+    100% {
+        background: #808fcd;
+    }
+}
+
+#cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    transform: rotate(135deg);
+    object-fit: contain;
+}
+
+.actionContainer {
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.actionContainer > * {
+    margin: 0 1rem;
+}
+
+
+.actionContainer * {
+    box-sizing: border-box;
+}
+
+#menu, #fontBtn {
+    border-radius: .5rem;
+    padding: 1rem;
+    border: #242424 1px solid;
+    outline: none;
+}
+
+#search {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    padding: 1rem 1rem 1rem 0;
+}
+
+.seachIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 1rem;
+    stroke: #656565;
+}
+
+.searchContainer {
+    border: #242424 1px solid;
+    border-radius: 0.5rem;
+    background-color: white;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+#suggest {
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 300px;
+    margin-top: 10px;
+    overflow-y: scroll;
+    max-height: 455px;
+    -ms-overflow-style: none; /* IE, Edge 対応 */
+    scrollbar-width: none; /* Firefox 対応 */
+}
+
+#suggest::-webkit-scrollbar {
+    /* Chrome, Safari 対応 */
+    display: none;
+}
+
+#suggest > li > a {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #242424;
+    transition: all 0.4s;
+    cursor: pointer;
+}
+
+#suggest > li > a:hover {
+    background-color: #ededed;
+}
+
+
+#suggest > li ~ li {
+    margin:1rem 0 0 0;
+}
+
+#suggest .text {
+    font-size: 1rem;
+}
+
+#suggest .time {
+    font-size: .6rem;
+    opacity: 0.7;
+}
+
+.container img{
+    height: 80%;
+    float: right;
+    margin-top: 5%;
+}
