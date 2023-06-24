@@ -36,7 +36,6 @@ const songList = [
 
 // TextAlive Player を初期化
 const player = new Player({
-    // トークンは https://developer.textalive.jp/profile で取得したものを使う
     app: {
         token: "JY0mLoHiX3lPTJaS",
         parameters: [],
