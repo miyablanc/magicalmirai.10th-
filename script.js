@@ -34,7 +34,6 @@ const songList = [
     },
 ];
 
-// TextAlive Player を初期化
 const player = new Player({
     app: {
         token: "JY0mLoHiX3lPTJaS",
@@ -148,10 +147,8 @@ player.addListener({
             resetChars();
         }
 
-        // 500ms先に発声される文字を取得
         let current = c || player.video.firstChar;
         while (current && current.startTime < position + 500) {
-            // 新しい文字が発声されようとしている
             if (c !== current) {
                 newChar(current);
                 c = current;
@@ -212,12 +209,8 @@ seekbar.addEventListener("click", (e) => {
     return false;
 });
 
-/**
- * 新しい文字の発声時に呼ばれる
- * Called when a new character is being vocalized
- */
+
 function newChar(current) {
-    // 品詞 (part-of-speech)
     // https://developer.textalive.jp/packages/textalive-app-api/interfaces/iword.html#pos
     const classes = [];
     if (
@@ -326,8 +319,6 @@ document.getElementById("search").addEventListener("input", (e) => {
     }
 });
 function newWord(current) {
-    // 品詞 (part-of-speech)
-    // https://developer.textalive.jp/packages/textalive-app-api/interfaces/iword.html#pos
     const classes = [];
     if (current.pos === "N" || current.pos === "PN" || current.pos === "X") {
         classes.push("noun");
@@ -372,4 +363,3 @@ function newWord(current) {
     });
     textContainer.appendChild(container);
 }
-
